@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+const int MAX = 100;
+
+void Lectura(int[][MAX], int);
+int Simectrico(int[][MAX], int);
+
+void main(void)
+{
+    int MAT[MAX][MAX], N, RES;
+    do
+    {
+        printf("Ingrese el tamaño del arreglo: ");
+        scanf("%d", &N);
+    }
+    while (N > MAX || N < 1);
+
+    Lectura(MAT, N);
+    RES = Simectrico(MAT, N);
+    if(RES)
+        printf("\nEl arreglo bidimmesional es simetrico");
+    else
+        printf("\nEl arreglo bidimensional no es simetrico");
+}
+
+void Lectura(int A[][MAX], int T)
+{
+    int I, J;
+    for (I=0; I<T; I++)
+        for (J=0; J<T; J++)
+    {
+        printf("Fila: %d\tColumna: %d", I+1, J+1);
+        scanf("%d", &A[I][J]);
+    }
+}
+
+int Simectrico(int A[][MAX], int T)
+{
+    int I = 0, J, F = 1;
+    while ((I<T) && F)
+    {
+        J = 0;
+        while ((J < I) && F)
+            if (A[I][J] == A[J][I])
+            J++;
+        else
+            F = 0;
+        I++;
+    }
+    return(F);
+}
