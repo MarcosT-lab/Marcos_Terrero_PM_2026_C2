@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Alumnos>
+<Alumno>
+<Nombre>Miguel</Nombre>
+<Apellido>Pina</Apellido>
+<Promedio>9</Promedio>
+<Materia>Matematicas</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Pablo</Nombre>
+<Apellido>Piddy</Apellido>
+<Promedio>9</Promedio>
+<Materia>Historia Dominicana</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Pedro</Nombre>
+<Apellido>Picapiedra</Apellido>
+<Promedio>3</Promedio>
+<Materia>Programacion para mecatronicos</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Bryant</Nombre>
+<Apellido>Bello</Apellido>
+<Promedio>8</Promedio>
+<Materia>Fisica</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Cristobal</Nombre>
+<Apellido>Colon</Apellido>
+<Promedio>10</Promedio>
+<Materia>Historia universal</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Nikola</Nombre>
+<Apellido>Tesla</Apellido>
+<Promedio>10</Promedio>
+<Materia>Electronica</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Albert</Nombre>
+<Apellido>Einstein</Apellido>
+<Promedio>9.9</Promedio>
+<Materia>Lab. Fisica</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Isaac</Nombre>
+<Apellido>Newton</Apellido>
+<Promedio>9.8</Promedio>
+<Materia>Lab. Fisica</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Pedro</Nombre>
+<Apellido>Perez</Apellido>
+<Promedio>3</Promedio>
+<Materia>Educacion Fisica</Materia>
+</Alumno>
+<Alumno>
+<Nombre>Pablo</Nombre>
+<Apellido>Picasso</Apellido>
+<Promedio>10</Promedio>
+<Materia>Dibujo tecnico</Materia>
+</Alumno>
+</Alumnos>

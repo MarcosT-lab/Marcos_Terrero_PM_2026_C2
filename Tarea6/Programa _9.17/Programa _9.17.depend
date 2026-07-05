@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1783227109 source:c:\users\marco\workspace\marcos_terrero_pm_2026_c2\tarea6\programa _9.17\main.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+

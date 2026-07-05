@@ -1,0 +1,64 @@
+{
+"Alumnos": [
+{
+"Nombre": "Miguel",
+"Apellido": "Pina",
+"Promedio": 9,
+"Materia": "Matematicas"
+},
+{
+"Nombre": "Pablo",
+"Apellido": "Piddy",
+"Promedio": 9,
+"Materia": "Historia Dominicana"
+},
+{
+"Nombre": "Pedro",
+"Apellido": "Picapiedra",
+"Promedio": 3,
+"Materia": "Programacion para mecatronicos"
+},
+{
+"Nombre": "Bryant",
+"Apellido": "Bello",
+"Promedio": 8,
+"Materia": "Fisica"
+},
+{
+"Nombre": "Cristobal",
+"Apellido": "Colon",
+"Promedio": 10,
+"Materia": "Historia Universal"
+},
+{
+"Nombre": "Nikola",
+"Apellido": "Tesla",
+"Promedio": 10,
+"Materia": "Electronica"
+},
+{
+"Nombre": "Albert",
+"Apellido": "Einstein",
+"Promedio": 9.9,
+"Materia": "Lab. Fisica"
+},
+{
+"Nombre": "Isaac",
+"Apellido": "Newton",
+"Promedio": 9.8,
+"Materia": "Lab. Fisica"
+},
+{
+"Nombre": "Pedro",
+"Apellido": "Perez",
+"Promedio": 3,
+"Materia": "Educacion Fisica"
+},
+{
+"Nombre": "Kevin",
+"Apellido": "Bolo",
+"Promedio": 10,
+"Materia": "Ingles"
+}
+]
+}
