@@ -1,0 +1,7 @@
+1. Mover disco 1 de A a C
+2. Mover disco 2 de A a B
+3. Mover disco 1 de C a B
+4. Mover disco 3 de A a C
+5. Mover disco 1 de B a A
+6. Mover disco 2 de B a C
+7. Mover disco 1 de A a C
