@@ -19,11 +19,9 @@ typedef struct {
     double consumo_autopista;
 } Vehiculo;
 
-
 typedef struct {
     double precio_combustible;
 } Config;
-
 
 void guardar_configuracion(Config cfg);
 Config cargar_configuracion();
@@ -43,7 +41,7 @@ int main() {
         printf("\n==========================================\n");
         printf("EL MOCHO AUTO: GESTION DE COSTOS DE VEHICULOS\n");
         printf("==========================================\n");
-        printf("Precio actual del combustible: $%.2f / Litro\n", cfg.precio_combustible);
+        printf("Precio actual del combustible: RD$%.2f / Galon\n", cfg.precio_combustible);
         printf("------------------------------------------\n");
         printf("1. Crear vehiculo y guardar\n");
         printf("2. Listar vehiculos\n");
@@ -74,7 +72,6 @@ int main() {
     return 0;
 }
 
-
 void guardar_configuracion(Config cfg) {
     FILE *f = fopen("config.dat", "wb");
     if (f) {
@@ -84,7 +81,8 @@ void guardar_configuracion(Config cfg) {
 }
 
 Config cargar_configuracion() {
-    Config cfg = {1.50};
+    // Se inicia con un estimado base en pesos dominicanos por galon
+    Config cfg = {270.00};
     FILE *f = fopen("config.dat", "rb");
     if (f) {
         fread(&cfg, sizeof(Config), 1, f);
@@ -98,12 +96,11 @@ Config cargar_configuracion() {
 void modificar_precio_combustible() {
     Config cfg;
     printf("\n--- MODIFICAR PRECIO DE COMBUSTIBLE ---\n");
-    printf("Ingrese el nuevo precio por litro de combustible: ");
+    printf("Ingrese el nuevo precio por galon de combustible (RD$): ");
     scanf("%lf", &cfg.precio_combustible);
     guardar_configuracion(cfg);
     printf("Precio del combustible actualizado con exito!\n");
 }
-
 
 void crear_vehiculo() {
     FILE *f = fopen(ARCHIVO, "ab+");
@@ -122,23 +119,23 @@ void crear_vehiculo() {
     fgets(v.nombre, MAX_NOMBRE, stdin);
     v.nombre[strcspn(v.nombre, "\n")] = 0;
 
-    printf("Costo inicial del vehiculo ($): ");
+    printf("Costo inicial del vehiculo (RD$): ");
     scanf("%lf", &v.costo_vehiculo);
-    printf("Valor residual estimado ($): ");
+    printf("Valor residual estimado (RD$): ");
     scanf("%lf", &v.valor_residual);
     printf("Vida util estimada (anos): ");
     scanf("%d", &v.vida_util_anos);
     printf("Kilometros recorridos al ano (promedio): ");
     scanf("%lf", &v.km_anuales);
-    printf("Costo del seguro anual ($): ");
+    printf("Costo del seguro anual (RD$): ");
     scanf("%lf", &v.seguro_anual);
-    printf("Gastos de mantenimiento anuales ($): ");
+    printf("Gastos de mantenimiento anuales (RD$): ");
     scanf("%lf", &v.mantenimiento_anual);
-    printf("Gastos de neumaticos anuales ($): ");
+    printf("Gastos de neumaticos anuales (RD$): ");
     scanf("%lf", &v.neumaticos_anual);
-    printf("Consumo de combustible en CIUDAD (L/100km): ");
+    printf("Consumo de combustible en CIUDAD (Galones/100km): ");
     scanf("%lf", &v.consumo_ciudad);
-    printf("Consumo de combustible en AUTOPISTA (L/100km): ");
+    printf("Consumo de combustible en AUTOPISTA (Galones/100km): ");
     scanf("%lf", &v.consumo_autopista);
 
     fwrite(&v, sizeof(Vehiculo), 1, f);
@@ -190,23 +187,23 @@ void modificar_vehiculo() {
             fgets(v.nombre, MAX_NOMBRE, stdin);
             v.nombre[strcspn(v.nombre, "\n")] = 0;
 
-            printf("Nuevo Costo inicial ($): ");
+            printf("Nuevo Costo inicial (RD$): ");
             scanf("%lf", &v.costo_vehiculo);
-            printf("Nuevo Valor residual ($): ");
+            printf("Nuevo Valor residual (RD$): ");
             scanf("%lf", &v.valor_residual);
             printf("Nueva Vida util (anos): ");
             scanf("%d", &v.vida_util_anos);
             printf("Nuevos Km anuales: ");
             scanf("%lf", &v.km_anuales);
-            printf("Nuevo Seguro anual ($): ");
+            printf("Nuevo Seguro anual (RD$): ");
             scanf("%lf", &v.seguro_anual);
-            printf("Nuevo Mantenimiento anual ($): ");
+            printf("Nuevo Mantenimiento anual (RD$): ");
             scanf("%lf", &v.mantenimiento_anual);
-            printf("Nuevo Costo de neumaticos anual ($): ");
+            printf("Nuevo Costo de neumaticos anual (RD$): ");
             scanf("%lf", &v.neumaticos_anual);
-            printf("Nuevo Consumo en CIUDAD (L/100km): ");
+            printf("Nuevo Consumo en CIUDAD (Galones/100km): ");
             scanf("%lf", &v.consumo_ciudad);
-            printf("Nuevo Consumo en AUTOPISTA (L/100km): ");
+            printf("Nuevo Consumo en AUTOPISTA (Galones/100km): ");
             scanf("%lf", &v.consumo_autopista);
 
             fseek(f, -((long)sizeof(Vehiculo)), SEEK_CUR);
@@ -259,33 +256,27 @@ void borrar_vehiculo() {
         printf("\nNo se encontro un vehiculo con ID %d.\n", id_borrar);
 }
 
-
 void calcular_costos_vehiculo(Vehiculo v, Config cfg) {
-
     double amortizacion_anual = (v.costo_vehiculo - v.valor_residual) / v.vida_util_anos;
     double amortizacion_total_vida_util = amortizacion_anual * v.vida_util_anos;
 
-
     double mantenimiento_total = v.mantenimiento_anual * v.vida_util_anos;
-
 
     double costos_fijos_anuales = amortizacion_anual + v.seguro_anual + v.mantenimiento_anual + v.neumaticos_anual;
     double costo_fijo_por_km = (v.km_anuales > 0) ? (costos_fijos_anuales / v.km_anuales) : 0;
 
-
     double costo_comb_ciudad_km = (v.consumo_ciudad / 100.0) * cfg.precio_combustible;
     double costo_comb_autopista_km = (v.consumo_autopista / 100.0) * cfg.precio_combustible;
-
 
     double costo_total_ciudad_km = costo_fijo_por_km + costo_comb_ciudad_km;
     double costo_total_autopista_km = costo_fijo_por_km + costo_comb_autopista_km;
 
     printf("------------------------------------------------------\n");
-    printf("   * Amortizacion anual: $%.2f (Total en vida util: $%.2f)\n", amortizacion_anual, amortizacion_total_vida_util);
-    printf("   * Mantenimiento estimado en vida util: $%.2f\n", mantenimiento_total);
-    printf("   * Costo fijo prorrateado (sin combustible): $%.3f / km\n", costo_fijo_por_km);
-    printf("   * Costo total por km en CIUDAD:    $%.3f / km\n", costo_total_ciudad_km);
-    printf("   * Costo total por km en AUTOPISTA: $%.3f / km\n", costo_total_autopista_km);
+    printf("   * Amortizacion anual: RD$%.2f (Total en vida util: RD$%.2f)\n", amortizacion_anual, amortizacion_total_vida_util);
+    printf("   * Mantenimiento estimado en vida util: RD$%.2f\n", mantenimiento_total);
+    printf("   * Costo fijo prorrateado (sin combustible): RD$%.3f / km\n", costo_fijo_por_km);
+    printf("   * Costo total por km en CIUDAD:    RD$%.3f / km\n", costo_total_ciudad_km);
+    printf("   * Costo total por km en AUTOPISTA: RD$%.3f / km\n", costo_total_autopista_km);
     printf("------------------------------------------------------\n");
 }
 
@@ -324,14 +315,12 @@ void calcular_viaje() {
     printf("Kilometros a recorrer en AUTOPISTA: ");
     scanf("%lf", &km_autopista);
 
+    // Calculo usando galones
+    double galones_ciudad = (km_ciudad * v.consumo_ciudad) / 100.0;
+    double galones_autopista = (km_autopista * v.consumo_autopista) / 100.0;
+    double total_galones = galones_ciudad + galones_autopista;
 
-    double litros_ciudad = (km_ciudad * v.consumo_ciudad) / 100.0;
-    double litros_autopista = (km_autopista * v.consumo_autopista) / 100.0;
-    double total_litros = litros_ciudad + litros_autopista;
-
-
-    double costo_combustible = total_litros * cfg.precio_combustible;
-
+    double costo_combustible = total_galones * cfg.precio_combustible;
 
     double costos_fijos_anuales = ((v.costo_vehiculo - v.valor_residual) / v.vida_util_anos)
                                  + v.seguro_anual + v.mantenimiento_anual + v.neumaticos_anual;
@@ -341,14 +330,14 @@ void calcular_viaje() {
     double costo_total_viaje = costo_combustible + costo_desgaste_viaje;
 
     printf("\n======================================================\n");
-    printf("               RESUMEN DEL VIAJE                      \n");
+    printf("                RESUMEN DEL VIAJE                     \n");
     printf("======================================================\n");
     printf("* Distancia Total:            %.2f km (%.2f km Ciudad / %.2f km Autopista)\n",
            km_ciudad + km_autopista, km_ciudad, km_autopista);
-    printf("* Consumo Total de Gasolina:  %.2f Litros\n", total_litros);
-    printf("* Costo de Combustible:       $%.2f\n", costo_combustible);
-    printf("* Costo de Desgaste y Fijos:  $%.2f\n", costo_desgaste_viaje);
+    printf("* Consumo Total de Gasolina:  %.2f Galones\n", total_galones);
+    printf("* Costo de Combustible:       RD$%.2f\n", costo_combustible);
+    printf("* Costo de Desgaste y Fijos:  RD$%.2f\n", costo_desgaste_viaje);
     printf("------------------------------------------------------\n");
-    printf("* COSTO REAL TOTAL DEL VIAJE: $%.2f\n", costo_total_viaje);
+    printf("* COSTO REAL TOTAL DEL VIAJE: RD$%.2f\n", costo_total_viaje);
     printf("======================================================\n");
 }
